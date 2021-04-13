@@ -1,11 +1,9 @@
 package com.sap.NotesRestApplication.Notes;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.management.InstanceNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +22,21 @@ public class NotesController {
     public Note getNote(@PathVariable int id){
         return notesService.getNote(id);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/notes")
+    public void addNote(@RequestBody Note note){
+        notesService.addNote(note.getAuthor(),note.getText());
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/notes")
+    public String changeNote(@RequestBody Note note){
+        try {
+            notesService.changeNote(Integer.parseInt(note.getAuthor()),note.getText());
+        } catch (InstanceNotFoundException e) {
+            return "Not found note with that ID";
+        }
+        return "Changed";
+    }
+
+    
 }
