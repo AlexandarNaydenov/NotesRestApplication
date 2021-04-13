@@ -26,8 +26,14 @@ public class NotesService {
     }
 
     public void addNote(String author, String text) {
+        try{
          this.notes.put(id,new Note(author, text));
-         this.id++;
+            this.id++;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Unsuccessful adding");
+        }
     }
 
     public void changeNote(int id, String newText) throws InstanceNotFoundException {
