@@ -38,5 +38,13 @@ public class NotesController {
         return "Changed";
     }
 
-
+    @RequestMapping(method = RequestMethod.DELETE, value = "notes/{id}")
+    public String removeNote(@PathVariable int id){
+        try {
+            notesService.removeNote(id);
+        } catch (InstanceNotFoundException e) {
+            return "Not found note with that ID";
+        }
+        return "Removed";
+    }
 }
