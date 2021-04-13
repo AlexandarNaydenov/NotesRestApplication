@@ -28,15 +28,15 @@ public class NotesController {
         notesService.addNote(note.getAuthor(),note.getText());
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/notes")
-    public String changeNote(@RequestBody Note note){
+    @RequestMapping(method = RequestMethod.PUT, value = "/notes/{id}")
+    public String changeNote(@PathVariable int id, @RequestBody String text){
         try {
-            notesService.changeNote(Integer.parseInt(note.getAuthor()),note.getText());
+            notesService.changeNote(id,text);
         } catch (InstanceNotFoundException e) {
             return "Not found note with that ID";
         }
         return "Changed";
     }
 
-    
+
 }
