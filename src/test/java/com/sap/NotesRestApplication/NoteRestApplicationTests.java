@@ -1,10 +1,10 @@
-package com.sap.NotesRestApplication.NotesRestApplication;
+package com.sap.NotesRestApplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NotesRestApplicationTests {
+class NoteRestApplicationTests {
 
 	@Test
 	void contextLoads() {
