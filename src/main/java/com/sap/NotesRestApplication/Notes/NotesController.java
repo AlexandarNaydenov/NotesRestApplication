@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.InstanceNotFoundException;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 public class NotesController {
@@ -15,13 +15,17 @@ public class NotesController {
     private NotesService notesService;
 
     @RequestMapping("/notes")
-    public Map<Integer,Note> getAllNotes(){
+    public List<Note> getAllNotes(){
         return notesService.getAllNotes();
     }
 
     @RequestMapping("notes/{id}")
     public Note getNote(@PathVariable int id){
-        return notesService.getNote(id);
+        try {
+            return notesService.getNote(id);
+        } catch (InstanceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ITEM NOT FOUND",e);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/notes")
