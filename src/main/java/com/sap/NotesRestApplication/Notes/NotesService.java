@@ -35,7 +35,9 @@ public class NotesService {
 
     public void changeNote(int id, String newText) throws InstanceNotFoundException {
         if(notesRepository.findById(id).isPresent()){
-           notesRepository.findById(id).get().setText(newText);
+           Note temp = notesRepository.findById(id).get();
+           temp.setText(newText);
+           notesRepository.save(temp);
         }else{
             throw new InstanceNotFoundException();
         }

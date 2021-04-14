@@ -32,7 +32,6 @@ public class NotesController {
     public void addNote(@RequestBody Note note){
         try{
         notesService.addNote(note.getAuthor(),note.getText());
-            System.out.println(note.getAuthor() + note.getText());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ITEM NOT ADDED",e);
         }
