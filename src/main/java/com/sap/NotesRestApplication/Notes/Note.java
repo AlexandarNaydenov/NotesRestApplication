@@ -2,6 +2,7 @@ package com.sap.NotesRestApplication.Notes;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Note {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String author;
     private String text;
@@ -65,11 +66,11 @@ public class Note {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Note note = (Note) o;
-        return author.equals(note.author) && Objects.equals(text, note.text);
+        return id == note.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(author, text);
+        return Objects.hash(id);
     }
 }

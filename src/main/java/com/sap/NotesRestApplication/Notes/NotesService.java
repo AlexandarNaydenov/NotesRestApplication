@@ -11,8 +11,6 @@ public class NotesService {
 
     @Autowired
     private NotesRepository notesRepository;
-    private Map<Integer,Note> notes;
-    private int id;
 
     public NotesService(){
     }

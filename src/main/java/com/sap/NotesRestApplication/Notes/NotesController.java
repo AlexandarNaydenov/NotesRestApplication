@@ -24,7 +24,7 @@ public class NotesController {
         try {
             return notesService.getNote(id);
         } catch (InstanceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ITEM NOT FOUND",e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -32,6 +32,7 @@ public class NotesController {
     public void addNote(@RequestBody Note note){
         try{
         notesService.addNote(note.getAuthor(),note.getText());
+            System.out.println(note.getAuthor() + note.getText());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ITEM NOT ADDED",e);
         }
