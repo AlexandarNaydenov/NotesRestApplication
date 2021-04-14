@@ -1,13 +1,25 @@
 package com.sap.NotesRestApplication.Notes;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
 public class Note {
+    @Id
+    @GeneratedValue
+    private int id;
     private String author;
     private String text;
     private final LocalDateTime creationTime;
     private LocalDateTime modificationTime;
+
+    public Note() {
+        this.creationTime = LocalDateTime.now();
+        this.modificationTime = LocalDateTime.now();
+    }
 
     public Note(String author) {
         this.author = author;

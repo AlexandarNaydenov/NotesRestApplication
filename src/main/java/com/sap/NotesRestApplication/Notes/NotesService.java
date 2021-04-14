@@ -1,5 +1,6 @@
 package com.sap.NotesRestApplication.Notes;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.management.InstanceNotFoundException;
@@ -8,47 +9,45 @@ import java.util.*;
 @Service
 public class NotesService {
 
+    @Autowired
+    private NotesRepository notesRepository;
     private Map<Integer,Note> notes;
     private int id;
 
     public NotesService(){
-        this.notes = new HashMap<>();
-        this.id = 1;
-        this.addNote("Alex","FirstNode");
     }
 
-    public Map<Integer,Note> getAllNotes(){
-        return notes;
+    public List<Note> getAllNotes(){
+        List<Note> list = new ArrayList<>();
+        notesRepository.findAll().forEach(list::add);
+        return list;
     }
 
-    public Note getNote(int id){
-        return notes.get(id);
+    public Note getNote(int id) throws InstanceNotFoundException {
+        if(notesRepository.findById(id).isPresent()){
+            return notesRepository.findById(id).get();
+        }else {
+            throw new InstanceNotFoundException();
+        }
     }
 
     public void addNote(String author, String text) {
-        try{
-         this.notes.put(id,new Note(author, text));
-            this.id++;
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Unsuccessful adding");
-        }
+       notesRepository.save(new Note(author,text));
     }
 
     public void changeNote(int id, String newText) throws InstanceNotFoundException {
-        if(notes.containsKey(id)) {
-            notes.get(id).setText(newText);
+        if(notesRepository.findById(id).isPresent()){
+           notesRepository.findById(id).get().setText(newText);
         }else{
-            throw new InstanceNotFoundException("There is no Note with that id");
+            throw new InstanceNotFoundException();
         }
     }
 
     public void removeNote(int id) throws InstanceNotFoundException {
-        if(notes.containsKey(id)){
-            notes.remove(id);
+        if(notesRepository.findById(id).isPresent()){
+            notesRepository.deleteById(id);
         }else{
-            throw new InstanceNotFoundException("There is no Note with that id");
+            throw new InstanceNotFoundException();
         }
     }
 }
