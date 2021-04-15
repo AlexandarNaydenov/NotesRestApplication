@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,63 +38,70 @@ class NoteRestApplicationTests {
 
 	@Test
 	 void addNote() throws Exception {
-		mockMvc.perform(delete("/notes/deleteAll"))
-				.andExpect(status().isOk());
-		mockMvc.perform(post("/notes")
+		Note addedNote = objectMapper.readValue(mockMvc.perform(post("/notes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(new Note("test author","test text"))))
-				.andExpect(status().isOk());
-		assertTrue(mockMvc.perform(get("/notes/1"))
 				.andReturn()
 				.getResponse()
 				.getContentAsString()
-				.contains("test author"));
+				,Note.class);
+		Note getNote = objectMapper.readValue(mockMvc.perform(get("/notes/"+addedNote.getId()))
+				.andReturn()
+				.getResponse()
+				.getContentAsString()
+				,Note.class);
+		assertEquals(addedNote,getNote);
 	}
 
 	@Test
 	void getAllNotes() throws Exception {
-		mockMvc.perform(delete("/notes/deleteAll"))
-				.andExpect(status().isOk());
-		mockMvc.perform(post("/notes")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new Note("test author","test text"))))
-				.andExpect(status().isOk());
+		Note addedNote = objectMapper.readValue(mockMvc.perform(post("/notes")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(new Note("Author","testing get all"))))
+						.andReturn()
+						.getResponse()
+						.getContentAsString()
+						,Note.class);
 		assertTrue(mockMvc.perform(get("/notes"))
 				.andExpect(status().isOk())
 				.andReturn()
 				.getResponse()
 				.getContentAsString()
-				.contains("test author"));
+				.contains("testing get all"));
 	}
 
 	@Test
 	void changeNote() throws Exception{
-			mockMvc.perform(delete("/notes/deleteAll"))
-				.andExpect(status().isOk());
-			mockMvc.perform(post("/notes")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new Note("test author","test text"))))
-				.andExpect(status().isOk());
-			mockMvc.perform(put("/notes/1")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content("changed text"))
-				.andExpect(status().isOk());
-		assertTrue(mockMvc.perform(get("/notes/1"))
-				.andReturn()
-				.getResponse()
-				.getContentAsString()
-				.contains("changed text"));
+		Note addedNote = objectMapper.readValue(mockMvc.perform(post("/notes")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(new Note("author","text before change"))))
+						.andReturn()
+						.getResponse()
+						.getContentAsString()
+						,Note.class);
+				mockMvc.perform(put("/notes/"+addedNote.getId())
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("text after change"))
+						.andExpect(status().isOk());
+		assertTrue(mockMvc.perform(get("/notes/"+addedNote.getId()))
+						.andReturn()
+						.getResponse()
+						.getContentAsString()
+						.contains("text after change"));
 	}
 
 	@Test
 	void deleteNote() throws Exception{
-		mockMvc.perform(post("/notes")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new Note("test author","test text"))))
+		Note addedNote = objectMapper.readValue(mockMvc.perform(post("/notes")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(new Note("author","text before change"))))
+						.andReturn()
+						.getResponse()
+						.getContentAsString()
+						,Note.class);
+		mockMvc.perform(delete("/notes/"+addedNote.getId()))
 				.andExpect(status().isOk());
-		mockMvc.perform(delete("/notes/1"))
-				.andExpect(status().isOk());
-		mockMvc.perform(get("/notes/1"))
+		mockMvc.perform(get("/notes/"+addedNote.getId()))
 				.andExpect(status().is(404));
 	}
 
@@ -101,5 +109,9 @@ class NoteRestApplicationTests {
 	 void deleteAllNotes() throws Exception{
 		mockMvc.perform(delete("/notes/deleteAll"))
 				.andExpect(status().isOk());
+		assertEquals("[]",	mockMvc.perform(get("/notes"))
+									.andReturn()
+									.getResponse()
+									.getContentAsString());
 	}
 }
