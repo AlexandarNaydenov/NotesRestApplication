@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String author;
     private String text;
