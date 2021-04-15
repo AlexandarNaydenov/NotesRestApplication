@@ -2,7 +2,10 @@ package com.sap.NotesRestApplication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.NotesRestApplication.Notes.Note;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +36,9 @@ class NoteRestApplicationTests {
 	void contextLoads() {
 	}
 
-	@Before
+	@BeforeEach
 	@Test
-	public void addNote() throws Exception {
+	 void addNote() throws Exception {
 		mockMvc.perform(post("/notes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(new Note("test author","test text"))))
@@ -60,5 +63,9 @@ class NoteRestApplicationTests {
 				.andExpect(status().is(202));
 	}
 
-	
+	@Test
+	void deleteNote() throws Exception{
+		mockMvc.perform(delete("/notes/2"))
+				.andExpect(status().is(202));
+	}
 }
