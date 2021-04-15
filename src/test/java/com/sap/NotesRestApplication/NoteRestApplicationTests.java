@@ -2,10 +2,8 @@ package com.sap.NotesRestApplication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.NotesRestApplication.Notes.Note;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,16 +24,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class NoteRestApplicationTests {
 
 	@Autowired
-	private MockMvc mockMvc;
+	private  MockMvc mockMvc;
 
 	@Autowired
-	ObjectMapper objectMapper;
+	private  ObjectMapper objectMapper;
 
 	@Test
 	void contextLoads() {
 	}
 
-	@BeforeEach
 	@Test
 	 void addNote() throws Exception {
 		mockMvc.perform(post("/notes")
@@ -65,7 +61,13 @@ class NoteRestApplicationTests {
 
 	@Test
 	void deleteNote() throws Exception{
-		mockMvc.perform(delete("/notes/2"))
+		mockMvc.perform(delete("/notes/1"))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	 void deleteAllNotes() throws Exception{
+		mockMvc.perform(delete("/notes/deleteAll"))
 				.andExpect(status().isOk());
 	}
 }
