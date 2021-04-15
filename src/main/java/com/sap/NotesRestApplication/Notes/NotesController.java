@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.InstanceNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class NotesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/notes")
-    public void addNote(@RequestBody Note note){
+    public void addNote(@Valid @RequestBody Note note){
         try{
         notesService.addNote(note.getAuthor(),note.getText());
         }catch (Exception e){
