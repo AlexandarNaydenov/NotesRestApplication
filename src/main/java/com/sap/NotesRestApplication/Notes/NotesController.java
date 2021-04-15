@@ -30,29 +30,28 @@ public class NotesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/notes")
-    public void addNote(@Valid @RequestBody Note note){
+    public Note addNote(@Valid @RequestBody Note note){
         try{
-        notesService.addNote(note.getAuthor(),note.getText());
+            return notesService.addNote(note.getAuthor(),note.getText());
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ITEM NOT ADDED",e);
         }
-        throw new ResponseStatusException(HttpStatus.OK);
+
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/notes/{id}")
-    public void changeNote(@PathVariable int id, @RequestBody String text){
+    public Note changeNote(@PathVariable int id, @RequestBody String text){
         try {
-            notesService.changeNote(id,text);
+            return notesService.changeNote(id,text);
         } catch (InstanceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "NOT FOUND NOTE WITH THAT ID");
         }
-        throw new ResponseStatusException(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "notes/{id}")
     public void removeNote(@PathVariable int id){
         try {
-            notesService.removeNote(id);
+             notesService.removeNote(id);
         } catch (InstanceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "NOT FOUND NOTE WITH THAT ID");
         }

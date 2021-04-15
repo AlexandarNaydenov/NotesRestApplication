@@ -48,6 +48,8 @@ public class Note {
         return text;
     }
 
+    public int getId() {return id;};
+
     public LocalDateTime getCreationTime() {
         return creationTime;
     }

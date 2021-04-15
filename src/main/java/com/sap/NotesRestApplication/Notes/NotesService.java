@@ -29,15 +29,15 @@ public class NotesService {
         }
     }
 
-    public void addNote(String author, String text) {
-       notesRepository.save(new Note(author,text));
+    public Note addNote(String author, String text) {
+       return notesRepository.save(new Note(author,text));
     }
 
-    public void changeNote(int id, String newText) throws InstanceNotFoundException {
+    public Note changeNote(int id, String newText) throws InstanceNotFoundException {
         if(notesRepository.findById(id).isPresent()){
            Note temp = notesRepository.findById(id).get();
            temp.setText(newText);
-           notesRepository.save(temp);
+           return notesRepository.save(temp);
         }else{
             throw new InstanceNotFoundException();
         }
@@ -45,7 +45,7 @@ public class NotesService {
 
     public void removeNote(int id) throws InstanceNotFoundException {
         if(notesRepository.findById(id).isPresent()){
-            notesRepository.deleteById(id);
+             notesRepository.deleteById(id);
         }else{
             throw new InstanceNotFoundException();
         }
