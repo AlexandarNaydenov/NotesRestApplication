@@ -50,4 +50,8 @@ public class NotesService {
             throw new InstanceNotFoundException();
         }
     }
+
+    public void removeAllNotes(){
+        notesRepository.deleteAll();
+    }
 }

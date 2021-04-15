@@ -35,7 +35,7 @@ public class NotesController {
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ITEM NOT ADDED",e);
         }
-        throw new ResponseStatusException(HttpStatus.ACCEPTED);
+        throw new ResponseStatusException(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/notes/{id}")
@@ -45,7 +45,7 @@ public class NotesController {
         } catch (InstanceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "NOT FOUND NOTE WITH THAT ID");
         }
-        throw new ResponseStatusException(HttpStatus.ACCEPTED);
+        throw new ResponseStatusException(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "notes/{id}")
@@ -55,6 +55,16 @@ public class NotesController {
         } catch (InstanceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "NOT FOUND NOTE WITH THAT ID");
         }
-        throw new ResponseStatusException(HttpStatus.ACCEPTED);
+        throw new ResponseStatusException(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "notes/deleteAll")
+    public void removeAllNotes(){
+        try{
+            notesService.removeAllNotes();
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "UNSUCCESSFULLY DELETING");
+        }
+        throw new ResponseStatusException(HttpStatus.OK);
     }
 }

@@ -42,7 +42,7 @@ class NoteRestApplicationTests {
 		mockMvc.perform(post("/notes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(new Note("test author","test text"))))
-				.andExpect(status().is(202));
+				.andExpect(status().isOk());
 	}
 
 	@Test
@@ -60,12 +60,12 @@ class NoteRestApplicationTests {
 			mockMvc.perform(put("/notes/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("changed text"))
-				.andExpect(status().is(202));
+				.andExpect(status().isOk());
 	}
 
 	@Test
 	void deleteNote() throws Exception{
 		mockMvc.perform(delete("/notes/2"))
-				.andExpect(status().is(202));
+				.andExpect(status().isOk());
 	}
 }
