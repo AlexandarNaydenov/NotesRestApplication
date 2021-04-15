@@ -47,11 +47,7 @@ class NotesServiceTest {
     }
 
     @Test
-    void addNote() {
-    }
-
-    @Test
-    void changeNote() {
+    void changeNote() throws InstanceNotFoundException {
     }
 
     @Test
