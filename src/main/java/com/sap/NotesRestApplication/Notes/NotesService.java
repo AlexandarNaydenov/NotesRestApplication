@@ -54,4 +54,8 @@ public class NotesService {
     public void removeAllNotes(){
         notesRepository.deleteAll();
     }
+
+    public List<Note> findAllByAuthor(String author){
+        return notesRepository.findAllByAuthor(author);
+    }
 }

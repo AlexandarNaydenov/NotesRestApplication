@@ -67,4 +67,13 @@ public class NotesController {
         }
         throw new ResponseStatusException(HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "notes/getByAuthor/{author}")
+    public List<Note> findAllByAuthor(@PathVariable @Valid String author){
+        try {
+            return notesService.findAllByAuthor(author);
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

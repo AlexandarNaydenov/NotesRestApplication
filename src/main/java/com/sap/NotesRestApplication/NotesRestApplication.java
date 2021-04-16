@@ -1,5 +1,7 @@
 package com.sap.NotesRestApplication;
 
+import com.sap.NotesRestApplication.Notes.NotesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
