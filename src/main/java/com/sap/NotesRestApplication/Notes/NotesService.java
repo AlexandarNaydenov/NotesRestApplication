@@ -12,50 +12,43 @@ public class NotesService {
     @Autowired
     private NotesRepository notesRepository;
 
-    public NotesService(){
+    public NotesService() {
     }
 
-    public List<Note> getAllNotes(){
-        List<Note> list = new ArrayList<>();
-        notesRepository.findAll().forEach(list::add);
-        return list;
+    public Iterable<Note> getAllNotes() {
+        return notesRepository.findAll();
     }
 
-    public Note getNote(int id) throws InstanceNotFoundException {
-        if(notesRepository.findById(id).isPresent()){
-            return notesRepository.findById(id).get();
-        }else {
-            throw new InstanceNotFoundException();
-        }
+    public Optional<Note> getNote(int id) {
+        return notesRepository.findById(id);
     }
 
     public Note addNote(String author, String text) {
-       return notesRepository.save(new Note(author,text));
+        return notesRepository.save(new Note(author, text));
     }
 
-    public Note changeNote(int id, String newText) throws InstanceNotFoundException {
-        if(notesRepository.findById(id).isPresent()){
-           Note temp = notesRepository.findById(id).get();
-           temp.setText(newText);
-           return notesRepository.save(temp);
-        }else{
-            throw new InstanceNotFoundException();
+    public Note changeNote(int id, String newText) {
+        if (notesRepository.findById(id).isEmpty()) {
+            return null;
         }
+        Note temp = notesRepository.findById(id).get();
+        temp.setText(newText);
+        return notesRepository.save(temp);
+
     }
 
     public void removeNote(int id) throws InstanceNotFoundException {
-        if(notesRepository.findById(id).isPresent()){
-             notesRepository.deleteById(id);
-        }else{
+        if (notesRepository.findById(id).isEmpty()) {
             throw new InstanceNotFoundException();
         }
+            notesRepository.deleteById(id);
     }
 
-    public void removeAllNotes(){
+    public void removeAllNotes() {
         notesRepository.deleteAll();
     }
 
-    public List<Note> findAllByAuthor(String author){
+    public Iterable<Note> findAllByAuthor(String author) {
         return notesRepository.findAllByAuthor(author);
     }
 }

@@ -16,15 +16,15 @@ public class NotesController {
     private NotesService notesService;
 
     @RequestMapping("/notes")
-    public List<Note> getAllNotes(){
+    public Iterable<Note> getAllNotes(){
         return notesService.getAllNotes();
     }
 
     @RequestMapping("notes/{id}")
     public Note getNote(@PathVariable int id){
-        try {
-            return notesService.getNote(id);
-        } catch (InstanceNotFoundException e) {
+        if(notesService.getNote(id).isPresent()) {
+            return notesService.getNote(id).get();
+        }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
@@ -41,9 +41,9 @@ public class NotesController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/notes/{id}")
     public Note changeNote(@PathVariable int id, @RequestBody String text){
-        try {
+        if(notesService.changeNote(id,text) != null) {
             return notesService.changeNote(id,text);
-        } catch (InstanceNotFoundException e) {
+        } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "NOT FOUND NOTE WITH THAT ID");
         }
     }
@@ -68,8 +68,8 @@ public class NotesController {
         throw new ResponseStatusException(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "notes/getByAuthor/{author}")
-    public List<Note> findAllByAuthor(@PathVariable @Valid String author){
+    @RequestMapping(method = RequestMethod.GET, value = "notes/author/{author}")
+    public Iterable<Note> findAllByAuthor(@PathVariable @Valid String author){
         try {
             return notesService.findAllByAuthor(author);
         } catch (Exception e){

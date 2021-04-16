@@ -36,14 +36,15 @@ class NotesServiceTest {
     @Test
     void getAllNotes() {
         Mockito.when(notesRepository.findAll()).thenReturn(list);
-        ArrayList<Note> noteList = new ArrayList<>(notesService.getAllNotes());
+        ArrayList<Note> noteList = new ArrayList<>();
+        notesService.getAllNotes().forEach(noteList::add);
         assertEquals(noteList.get(1).getAuthor(),"Ivan");
     }
 
     @Test
     void getNote() throws InstanceNotFoundException {
         Mockito.when(notesRepository.findById(3)).thenReturn(java.util.Optional.ofNullable(list.get(2)));
-        assertEquals(notesService.getNote(3).getAuthor(),"Maria");
+        assertEquals(notesService.getNote(3).get().getAuthor(),"Maria");
     }
 
     @Test
