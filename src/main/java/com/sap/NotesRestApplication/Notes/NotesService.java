@@ -37,11 +37,10 @@ public class NotesService {
 
     }
 
-    public void removeNote(int id) throws InstanceNotFoundException {
-        if (notesRepository.findById(id).isEmpty()) {
-            throw new InstanceNotFoundException();
-        }
-            notesRepository.deleteById(id);
+    public Optional<Note> deleteNote(int id) {
+        Optional<Note> removedNote =  notesRepository.findById(id);
+        if(removedNote.isPresent()) {notesRepository.deleteById(id);}
+        return removedNote;
     }
 
     public void removeAllNotes() {
