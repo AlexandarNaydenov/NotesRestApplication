@@ -26,7 +26,7 @@ into the terminal.
 ```bash
 The third way if you do not want to download JDK, you can use 
 Docker by downloading and run the image from: 
-
+https://hub.docker.com/repository/docker/alexandar99naydenov/notes_rest_application
 ```
 
 ## Usage
