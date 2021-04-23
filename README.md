@@ -15,7 +15,7 @@ After that you start the main method from
 NotesRestApplication.class 
 ```
 
-``bash
+```bash
 The second way is by starting the NotesRestApplication-0.0.1-SNAPSHOT.jar
  file from "target" folder. You also need JDK 15 or newer.
 
@@ -23,7 +23,7 @@ You can do that by typing
 java -jar target/NotesRestApplication-0.0.1-SNAPSHOT.jar
 into the terminal.
 ```
-``bash
+```bash
 The third way if you do not want to download JDK, you can use 
 Docker by downloading and run the image from: 
 
