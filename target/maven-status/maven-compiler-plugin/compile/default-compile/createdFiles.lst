@@ -1,5 +1,0 @@
-com/sap/NotesRestApplication/NotesRestApplication.class
-com/sap/NotesRestApplication/Notes/NotesController.class
-com/sap/NotesRestApplication/Notes/Note.class
-com/sap/NotesRestApplication/Notes/NotesService.class
-com/sap/NotesRestApplication/Notes/NotesRepository.class
