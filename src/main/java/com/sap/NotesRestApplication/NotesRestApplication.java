@@ -12,5 +12,4 @@ public class NotesRestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NotesRestApplication.class, args);
 	}
-
 }
