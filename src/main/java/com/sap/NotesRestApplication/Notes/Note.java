@@ -23,6 +23,7 @@ public class Note {
     private LocalDateTime modificationTime;
 
     public Note() {
+        this.author="New Author";
         this.creationTime = LocalDateTime.now();
         this.modificationTime = LocalDateTime.now();
     }
