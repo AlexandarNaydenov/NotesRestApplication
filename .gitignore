@@ -3,5 +3,6 @@
 NotesRestApplication.iml
 mvnw
 mvnw.cmd
+target/
 HELP.md
 NotesDataBase.mv.db
