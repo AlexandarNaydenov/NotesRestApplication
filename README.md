@@ -29,7 +29,8 @@ Docker by downloading and run the image from:
 https://hub.docker.com/repository/docker/alexandar99naydenov/notes_rest_application
 ```
 
-## Usage
+## Usage 
+
 
 ```python
 After you start the application you can :
