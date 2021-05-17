@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  notes_rest_application:
+    build: .
+    ports:
+    - 7777:12345
+
