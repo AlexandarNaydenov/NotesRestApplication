@@ -48,4 +48,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: alexandar99naydenov/notes_rest_application
+          tags: alexandar99naydenov/notes_rest_application:${GITHUB_SHA::6}
