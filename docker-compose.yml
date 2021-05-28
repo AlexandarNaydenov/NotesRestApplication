@@ -3,5 +3,5 @@ services:
   notes_rest_application:
     build: .
     ports:
-    - 7777:12345
+    - 7777:8080
 

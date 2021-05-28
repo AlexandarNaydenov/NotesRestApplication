@@ -6,3 +6,5 @@ mvnw.cmd
 target/
 HELP.md
 NotesDataBase.mv.db
+deployment.yaml
+service.yaml
