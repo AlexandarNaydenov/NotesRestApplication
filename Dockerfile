@@ -12,7 +12,7 @@ FROM openjdk:16-jdk-alpine
 
 WORKDIR /app
 
-EXPOSE 8080
+EXPOSE 12345
 
 COPY --from=MAVEN_BUILD /build/target/NotesRestApplication-0.0.1-SNAPSHOT.jar /app/NotesRestApp.jar
 
