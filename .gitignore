@@ -6,5 +6,3 @@ mvnw.cmd
 target/
 HELP.md
 NotesDataBase.mv.db
-notes-rest.yaml
-service.yaml
