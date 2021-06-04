@@ -17,6 +17,14 @@ spec:
         image: alexandar99naydenov/notes_rest_application
         ports:
         - containerPort: 12345
+        volumeMounts:
+            - mountPath: /app/data
+              name: notes-volume
+      volumes:
+      - name: notes-volume
+        persistentVolumeClaim:
+          claimName: notes-pvc
+          readOnly: false
 ---
 apiVersion: v1
 kind: Service
